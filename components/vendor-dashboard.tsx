@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Bell,
   Users,
-  DollarSign,
+  IndianRupee,
   TrendingUp,
   FileText,
   QrCode,
@@ -137,7 +137,7 @@ export function VendorDashboard() {
     {
       id: "1",
       title: "Payment Received",
-      message: "Fresh Foods Co. payment of $1,250 has been processed",
+      message: "Fresh Foods Co. payment of ₹1,250 has been processed",
       type: "success",
       timestamp: "2024-01-15 10:30 AM",
       read: false,
@@ -189,14 +189,16 @@ export function VendorDashboard() {
         <div className="flex h-16 items-center px-6">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center">
+              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center transform rotate-1">
                 <Users className="h-4 w-4 text-white" />
               </div>
-              <h1 className="text-xl font-semibold">Vendor Management System</h1>
+              <h1 className="text-xl font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Vendor Management System
+              </h1>
             </div>
           </div>
           <div className="ml-auto flex items-center space-x-4">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-dashed">
               <Bell className="h-4 w-4 mr-2" />
               Notifications
               <Badge className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
@@ -214,62 +216,25 @@ export function VendorDashboard() {
       <div className="flex">
         <div className="w-64 border-r bg-white min-h-screen">
           <nav className="p-4 space-y-2">
-            <Button
-              variant={activeTab === "dashboard" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("dashboard")}
-            >
-              <TrendingUp className="h-4 w-4 mr-2" />
-              Dashboard
-            </Button>
-            <Button
-              variant={activeTab === "vendors" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("vendors")}
-            >
-              <Users className="h-4 w-4 mr-2" />
-              Vendors
-            </Button>
-            <Button
-              variant={activeTab === "transactions" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("transactions")}
-            >
-              <DollarSign className="h-4 w-4 mr-2" />
-              Transactions
-            </Button>
-            <Button
-              variant={activeTab === "payments" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("payments")}
-            >
-              <QrCode className="h-4 w-4 mr-2" />
-              Payments
-            </Button>
-            <Button
-              variant={activeTab === "documents" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("documents")}
-            >
-              <FileText className="h-4 w-4 mr-2" />
-              Documents
-            </Button>
-            <Button
-              variant={activeTab === "deliveries" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("deliveries")}
-            >
-              <Truck className="h-4 w-4 mr-2" />
-              Deliveries
-            </Button>
-            <Button
-              variant={activeTab === "feedback" ? "default" : "ghost"}
-              className="w-full justify-start"
-              onClick={() => setActiveTab("feedback")}
-            >
-              <MessageSquare className="h-4 w-4 mr-2" />
-              Feedback
-            </Button>
+            {[
+              { id: "dashboard", icon: TrendingUp, label: "Dashboard" },
+              { id: "vendors", icon: Users, label: "Vendors" },
+              { id: "transactions", icon: IndianRupee, label: "Transactions" },
+              { id: "payments", icon: QrCode, label: "Payments" },
+              { id: "documents", icon: FileText, label: "Documents" },
+              { id: "deliveries", icon: Truck, label: "Deliveries" },
+              { id: "feedback", icon: MessageSquare, label: "Feedback" },
+            ].map((item) => (
+              <Button
+                key={item.id}
+                variant={activeTab === item.id ? "default" : "ghost"}
+                className={`w-full justify-start ${activeTab === item.id ? "bg-gradient-to-r from-blue-500 to-blue-600" : ""} transition-all duration-200 hover:translate-x-1`}
+                onClick={() => setActiveTab(item.id)}
+              >
+                <item.icon className="h-4 w-4 mr-2" />
+                {item.label}
+              </Button>
+            ))}
           </nav>
         </div>
 
@@ -282,21 +247,21 @@ export function VendorDashboard() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="overflow-hidden border-2 hover:shadow-md transition-all duration-200">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-blue-50 to-white">
                     <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                    <IndianRupee className="h-4 w-4 text-blue-600" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">${totalRevenue.toLocaleString()}</div>
+                    <div className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</div>
                     <p className="text-xs text-muted-foreground">+12% from last month</p>
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="overflow-hidden border-2 hover:shadow-md transition-all duration-200">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-green-50 to-white">
                     <CardTitle className="text-sm font-medium">Active Vendors</CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
+                    <Users className="h-4 w-4 text-green-600" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">{activeVendors}</div>
@@ -304,10 +269,10 @@ export function VendorDashboard() {
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="overflow-hidden border-2 hover:shadow-md transition-all duration-200">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-yellow-50 to-white">
                     <CardTitle className="text-sm font-medium">Pending Transactions</CardTitle>
-                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <Clock className="h-4 w-4 text-yellow-600" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">{pendingTransactions}</div>
@@ -315,10 +280,10 @@ export function VendorDashboard() {
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <Card className="overflow-hidden border-2 hover:shadow-md transition-all duration-200">
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 bg-gradient-to-r from-purple-50 to-white">
                     <CardTitle className="text-sm font-medium">Average Rating</CardTitle>
-                    <Star className="h-4 w-4 text-muted-foreground" />
+                    <Star className="h-4 w-4 text-yellow-500 fill-current" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">4.5</div>
@@ -335,23 +300,30 @@ export function VendorDashboard() {
                   <CardContent>
                     <div className="space-y-4">
                       {transactions.slice(0, 5).map((transaction) => (
-                        <div key={transaction.id} className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
-                            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100">
+                        <div
+                          key={transaction.id}
+                          className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                        >
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 transform rotate-1">
                               {transaction.type === "qr" ? (
-                                <QrCode className="h-4 w-4 text-blue-600" />
+                                <QrCode className="h-5 w-5 text-blue-600" />
                               ) : (
-                                <CreditCard className="h-4 w-4 text-blue-600" />
+                                <CreditCard className="h-5 w-5 text-blue-600" />
                               )}
                             </div>
                             <div>
                               <p className="font-medium">{transaction.vendorName}</p>
                               <p className="text-sm text-gray-600">{transaction.description}</p>
+                              <p className="text-xs text-gray-400">{transaction.date}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-medium">${transaction.amount}</p>
-                            <Badge className={getStatusColor(transaction.status)}>{transaction.status}</Badge>
+                            <p className="font-medium text-lg">₹{transaction.amount}</p>
+                            <Badge className={`${getStatusColor(transaction.status)} transform -rotate-1`}>
+                              {transaction.status}
+                            </Badge>
+                            <p className="text-xs text-gray-400 mt-1">{transaction.type.toUpperCase()}</p>
                           </div>
                         </div>
                       ))}
@@ -451,7 +423,7 @@ export function VendorDashboard() {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-600">Total Amount:</span>
-                          <span className="text-sm font-medium">${vendor.totalAmount.toLocaleString()}</span>
+                          <span className="text-sm font-medium">₹{vendor.totalAmount.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-gray-600">Rating:</span>
@@ -525,9 +497,12 @@ export function VendorDashboard() {
                 <CardContent>
                   <div className="space-y-4">
                     {transactions.map((transaction) => (
-                      <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg">
+                      <div
+                        key={transaction.id}
+                        className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                      >
                         <div className="flex items-center space-x-4">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100">
+                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 transform rotate-1">
                             {transaction.type === "qr" ? (
                               <QrCode className="h-5 w-5 text-blue-600" />
                             ) : (
@@ -541,8 +516,10 @@ export function VendorDashboard() {
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium text-lg">${transaction.amount}</p>
-                          <Badge className={getStatusColor(transaction.status)}>{transaction.status}</Badge>
+                          <p className="font-medium text-lg">₹{transaction.amount}</p>
+                          <Badge className={`${getStatusColor(transaction.status)} transform -rotate-1`}>
+                            {transaction.status}
+                          </Badge>
                           <p className="text-xs text-gray-400 mt-1">{transaction.type.toUpperCase()}</p>
                         </div>
                       </div>
@@ -648,10 +625,10 @@ export function VendorDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4 border rounded-lg">
+                    <div className="text-center p-4 border rounded-lg bg-gradient-to-br from-white to-blue-50 hover:shadow-sm transition-all">
                       <QrCode className="h-8 w-8 mx-auto mb-2 text-blue-600" />
                       <p className="text-2xl font-bold">
-                        $
+                        ₹
                         {transactions
                           .filter((t) => t.type === "qr" && t.status === "completed")
                           .reduce((sum, t) => sum + t.amount, 0)
@@ -659,10 +636,10 @@ export function VendorDashboard() {
                       </p>
                       <p className="text-sm text-gray-600">QR Payments</p>
                     </div>
-                    <div className="text-center p-4 border rounded-lg">
+                    <div className="text-center p-4 border rounded-lg bg-gradient-to-br from-white to-green-50 hover:shadow-sm transition-all">
                       <CreditCard className="h-8 w-8 mx-auto mb-2 text-green-600" />
                       <p className="text-2xl font-bold">
-                        $
+                        ₹
                         {transactions
                           .filter((t) => t.type === "cash" && t.status === "completed")
                           .reduce((sum, t) => sum + t.amount, 0)
@@ -670,9 +647,9 @@ export function VendorDashboard() {
                       </p>
                       <p className="text-sm text-gray-600">Cash Payments</p>
                     </div>
-                    <div className="text-center p-4 border rounded-lg">
-                      <DollarSign className="h-8 w-8 mx-auto mb-2 text-purple-600" />
-                      <p className="text-2xl font-bold">${totalRevenue.toLocaleString()}</p>
+                    <div className="text-center p-4 border rounded-lg bg-gradient-to-br from-white to-purple-50 hover:shadow-sm transition-all">
+                      <IndianRupee className="h-8 w-8 mx-auto mb-2 text-purple-600" />
+                      <p className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</p>
                       <p className="text-sm text-gray-600">Total Revenue</p>
                     </div>
                   </div>

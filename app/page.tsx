@@ -1,5 +1,9 @@
 import { VendorDashboard } from "@/components/vendor-dashboard"
 
 export default function Home() {
-  return <VendorDashboard />
+  return (
+    <div className="bg-texture">
+      <VendorDashboard />
+    </div>
+  )
 }
