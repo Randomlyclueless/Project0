@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { InstantPaymentSystem } from "./instant-payment-system"
 import {
   Bell,
   Users,
@@ -220,7 +220,7 @@ export function VendorDashboard() {
               { id: "dashboard", icon: TrendingUp, label: "Dashboard" },
               { id: "vendors", icon: Users, label: "Vendors" },
               { id: "transactions", icon: IndianRupee, label: "Transactions" },
-              { id: "payments", icon: QrCode, label: "Payments" },
+              { id: "payments", icon: QrCode, label: "QR Payments", isNew: true },
               { id: "documents", icon: FileText, label: "Documents" },
               { id: "deliveries", icon: Truck, label: "Deliveries" },
               { id: "feedback", icon: MessageSquare, label: "Feedback" },
@@ -228,11 +228,12 @@ export function VendorDashboard() {
               <Button
                 key={item.id}
                 variant={activeTab === item.id ? "default" : "ghost"}
-                className={`w-full justify-start ${activeTab === item.id ? "bg-gradient-to-r from-blue-500 to-blue-600" : ""} transition-all duration-200 hover:translate-x-1`}
+                className={`w-full justify-start ${activeTab === item.id ? "bg-gradient-to-r from-blue-500 to-blue-600" : ""} transition-all duration-200 hover:translate-x-1 relative`}
                 onClick={() => setActiveTab(item.id)}
               >
                 <item.icon className="h-4 w-4 mr-2" />
                 {item.label}
+                {item.isNew && <Badge className="ml-auto bg-green-500 text-white text-xs">NEW</Badge>}
               </Button>
             ))}
           </nav>
@@ -530,133 +531,7 @@ export function VendorDashboard() {
             </div>
           )}
 
-          {activeTab === "payments" && (
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-2xl font-bold">Payment Management</h2>
-                <p className="text-gray-600">Handle QR payments and manual cash entries</p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <QrCode className="h-5 w-5 mr-2" />
-                      QR Payment Processing
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="vendor-select">Select Vendor</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose vendor" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {vendors.map((vendor) => (
-                            <SelectItem key={vendor.id} value={vendor.id}>
-                              {vendor.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="qr-amount">Amount</Label>
-                      <Input id="qr-amount" type="number" placeholder="0.00" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="qr-description">Description</Label>
-                      <Input id="qr-description" placeholder="Payment description" />
-                    </div>
-                    <Button className="w-full">
-                      <QrCode className="h-4 w-4 mr-2" />
-                      Generate QR Code
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <CreditCard className="h-5 w-5 mr-2" />
-                      Manual Cash Entry
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="cash-vendor">Select Vendor</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose vendor" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {vendors.map((vendor) => (
-                            <SelectItem key={vendor.id} value={vendor.id}>
-                              {vendor.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="cash-amount">Amount</Label>
-                      <Input id="cash-amount" type="number" placeholder="0.00" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="cash-description">Description</Label>
-                      <Input id="cash-description" placeholder="Payment description" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="receipt-number">Receipt Number</Label>
-                      <Input id="receipt-number" placeholder="Receipt #" />
-                    </div>
-                    <Button className="w-full">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Record Cash Payment
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Payment Analytics</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4 border rounded-lg bg-gradient-to-br from-white to-blue-50 hover:shadow-sm transition-all">
-                      <QrCode className="h-8 w-8 mx-auto mb-2 text-blue-600" />
-                      <p className="text-2xl font-bold">
-                        ₹
-                        {transactions
-                          .filter((t) => t.type === "qr" && t.status === "completed")
-                          .reduce((sum, t) => sum + t.amount, 0)
-                          .toLocaleString()}
-                      </p>
-                      <p className="text-sm text-gray-600">QR Payments</p>
-                    </div>
-                    <div className="text-center p-4 border rounded-lg bg-gradient-to-br from-white to-green-50 hover:shadow-sm transition-all">
-                      <CreditCard className="h-8 w-8 mx-auto mb-2 text-green-600" />
-                      <p className="text-2xl font-bold">
-                        ₹
-                        {transactions
-                          .filter((t) => t.type === "cash" && t.status === "completed")
-                          .reduce((sum, t) => sum + t.amount, 0)
-                          .toLocaleString()}
-                      </p>
-                      <p className="text-sm text-gray-600">Cash Payments</p>
-                    </div>
-                    <div className="text-center p-4 border rounded-lg bg-gradient-to-br from-white to-purple-50 hover:shadow-sm transition-all">
-                      <IndianRupee className="h-8 w-8 mx-auto mb-2 text-purple-600" />
-                      <p className="text-2xl font-bold">₹{totalRevenue.toLocaleString()}</p>
-                      <p className="text-sm text-gray-600">Total Revenue</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+          {activeTab === "payments" && <InstantPaymentSystem />}
 
           {activeTab === "documents" && (
             <div className="space-y-6">
