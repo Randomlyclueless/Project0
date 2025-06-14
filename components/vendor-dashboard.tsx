@@ -189,11 +189,11 @@ export function VendorDashboard() {
         <div className="flex h-16 items-center px-6">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center transform rotate-1">
-                <Users className="h-4 w-4 text-white" />
+              <div className="h-8 w-8 rounded-lg overflow-hidden">
+                <img src="/vyapaari-logo.jpg" alt="Vyapaari Logo" className="h-full w-full object-cover" />
               </div>
               <h1 className="text-xl font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Vendor Management System
+                Vyapaari
               </h1>
             </div>
           </div>

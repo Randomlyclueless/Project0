@@ -211,7 +211,7 @@ export function InstantPaymentSystem() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">Instant Payment System</h2>
+        <h2 className="text-2xl font-bold">Vyapaari - Instant Payment System</h2>
         <p className="text-gray-600">Quick QR & Cash payments with automatic customer tracking</p>
       </div>
 

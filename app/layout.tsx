@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"] })
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" })
 
 export const metadata: Metadata = {
-  title: "Vendor Management System",
-  description: "Comprehensive vendor tracking and management platform",
+  title: "Vyapaari - Smart Business Management",
+  description: "Comprehensive vendor tracking and payment management platform",
   generator: "v0.dev",
 }
 
