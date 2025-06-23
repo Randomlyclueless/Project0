@@ -1,0 +1,8 @@
+# Node modules
+node_modules/
+
+# Environment
+.env
+
+# Build folder (optional if you build before deploy)
+client/build/
