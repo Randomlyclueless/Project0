@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Vedor Tracking App
 
 *Automatically synced with your [v0.dev](https://v0.dev) deployments*
@@ -28,3 +29,6 @@ Continue building your app on:
 2. Deploy your chats from the v0 interface
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
+=======
+# Project0
+>>>>>>> b7de7025151e4b9eea3b87c9ff7f907245feedb3
